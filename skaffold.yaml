@@ -1,0 +1,15 @@
+apiVersion: skaffold/v2beta4
+kind: Config
+build:
+  tagPolicy:
+    sha256: {}
+  artifacts:
+  - context: .
+    image: venky-hello-world
+deploy:
+  kubectl:
+    manifests:
+    - manifests/helloworld_secret.yaml
+    - manifests/helloworld_deployment.yaml
+    - manifests/helloworld_service.yaml
+    - manifests/helloworld_ingress.yaml
