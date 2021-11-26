@@ -94,3 +94,19 @@ jobs:
           args: get pods
     - name: Apply the config map
       run: kubectl apply -f config-map-aws-auth.yaml
+      
+deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions-hub/kubectl@master
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+
+      - uses: actions-hub/kubectl@master
+        with:
+          args: get pods
+      - name: Run the scaffold job to create deployments services and ingress
+        run: kubectl create -f skaffold.yaml
